@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minion Eyes Follow Cursor</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #ffeb3b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .minion {
+      display: flex;
+      gap: 40px;
+      padding: 50px;
+      border-radius: 50%;
+    }
+
+    .eye {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border: 5px solid #888;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pupil {
+      width: 40px;
+      height: 40px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      transition: transform 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+  <div class="minion">
+    <div class="eye"><div class="pupil"></div></div>
+    <div class="eye"><div class="pupil"></div></div>
+  </div>
+
+  <script>
+    const eyes = document.querySelectorAll(".pupil");
+    document.addEventListener("mousemove", (event) => {
+      let mouseX = event.clientX;
+      let mouseY = event.clientY;
+      eyes.forEach((eye) => {
+        let eyeRect = eye.parentElement.getBoundingClientRect();
+        let eyeX = eyeRect.left + eyeRect.width / 2;
+        let eyeY = eyeRect.top + eyeRect.height / 2;
+        let deltaX = mouseX - eyeX;
+        let deltaY = mouseY - eyeY;
+        let angle = Math.atan2(deltaY, deltaX);
+        let distance = Math.min(eyeRect.width / 4, Math.hypot(deltaX, deltaY) / 10);
+        let moveX = Math.cos(angle) * distance;
+        let moveY = Math.sin(angle) * distance;
+        eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
+    });
+  </script>
+</body>
+</html>

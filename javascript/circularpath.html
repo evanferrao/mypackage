@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rotating Square on Square Path</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #111;
+    }
+
+    .container {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      animation: rotatePath 8s linear infinite;
+    }
+
+    .square {
+      width: 40px;
+      height: 40px;
+      background-color: #00f2ff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: followSquarePath 8s linear infinite, rotateSelf 2s linear infinite;
+    }
+
+    @keyframes followSquarePath {
+      0% {
+        top: 0;
+        left: 0;
+      }
+      25% {
+        top: 0;
+        left: 100%;
+        transform: translate(-100%, 0);
+      }
+      50% {
+        top: 100%;
+        left: 100%;
+        transform: translate(-100%, -100%);
+      }
+      75% {
+        top: 100%;
+        left: 0;
+        transform: translate(0, -100%);
+      }
+      100% {
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes rotateSelf {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="square"></div>
+  </div>
+</body>
+</html>
