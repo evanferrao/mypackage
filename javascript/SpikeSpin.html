@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spiky Spinner</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner {
+      animation: spin 4s linear infinite;
+    }
+
+    .spike {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid blue;
+      transform-origin: bottom center;
+    }
+
+    /* Manually rotate 24 spikes around the circle (15° apart) */
+    .spike:nth-child(1)  { transform: rotate(0deg)    translateX(-50%); }
+    .spike:nth-child(2)  { transform: rotate(15deg)   translateX(-50%); }
+    .spike:nth-child(3)  { transform: rotate(30deg)   translateX(-50%); }
+    .spike:nth-child(4)  { transform: rotate(45deg)   translateX(-50%); }
+    .spike:nth-child(5)  { transform: rotate(60deg)   translateX(-50%); }
+    .spike:nth-child(6)  { transform: rotate(75deg)   translateX(-50%); }
+    .spike:nth-child(7)  { transform: rotate(90deg)   translateX(-50%); }
+    .spike:nth-child(8)  { transform: rotate(105deg)  translateX(-50%); }
+    .spike:nth-child(9)  { transform: rotate(120deg)  translateX(-50%); }
+    .spike:nth-child(10) { transform: rotate(135deg)  translateX(-50%); }
+    .spike:nth-child(11) { transform: rotate(150deg)  translateX(-50%); }
+    .spike:nth-child(12) { transform: rotate(165deg)  translateX(-50%); }
+    .spike:nth-child(13) { transform: rotate(180deg)  translateX(-50%); }
+    .spike:nth-child(14) { transform: rotate(195deg)  translateX(-50%); }
+    .spike:nth-child(15) { transform: rotate(210deg)  translateX(-50%); }
+    .spike:nth-child(16) { transform: rotate(225deg)  translateX(-50%); }
+    .spike:nth-child(17) { transform: rotate(240deg)  translateX(-50%); }
+    .spike:nth-child(18) { transform: rotate(255deg)  translateX(-50%); }
+    .spike:nth-child(19) { transform: rotate(270deg)  translateX(-50%); }
+    .spike:nth-child(20) { transform: rotate(285deg)  translateX(-50%); }
+    .spike:nth-child(21) { transform: rotate(300deg)  translateX(-50%); }
+    .spike:nth-child(22) { transform: rotate(315deg)  translateX(-50%); }
+    .spike:nth-child(23) { transform: rotate(330deg)  translateX(-50%); }
+    .spike:nth-child(24) { transform: rotate(345deg)  translateX(-50%); }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner">
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+    <div class="spike"></div>
+  </div>
+</body>
+</html>

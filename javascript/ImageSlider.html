@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .slider-container {
+      width: 80%;
+      max-width: 600px;
+      margin: auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      display: block;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+  </style>
+</head>
+<body>
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide"><img src="/home/swikkypie/wallpapers/mountains.png" alt="Image 1"></div>
+      <div class="slide"><img src="/home/swikkypie/Pictures/Wallpapers/flowers.jpg" alt="Image 2"></div>
+      <div class="slide"><img src="/home/swikkypie/Pictures/Wallpapers/snow.png" alt="Image 3"></div>
+    </div>
+    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+  </div>
+
+  <script>
+    let index = 0;
+    function moveSlide(step) {
+      const slides = document.querySelectorAll(".slide");
+      index = (index + step + slides.length) % slides.length;
+      document.querySelector(".slider").style.transform = `translateX(-${index * 100}%)`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to top right, #0f0c29, #302b63, #24243e);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app {
+  text-align: center;
+  padding: 2rem;
+}
+
+.subtext {
+  color: #ffc107;
+  margin-bottom: 2rem;
+}
+
+.card-wrapper {
+  perspective: 1000px;
+  width: 300px;
+  height: 400px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card-wrapper:hover .card {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+  overflow: hidden;
+}
+
+.front {
+  background: radial-gradient(#0ff, #00f);
+}
+
+.back {
+  background: radial-gradient(#00f, #0ff);
+  color: #fff;
+  transform: rotateY(180deg);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid white;
+}
+
+.highlight {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.links a {
+  margin: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  background: #111;
+  color: #0ff;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.links a:hover {
+  background: #0ff;
+  color: #000;
+}
+
+.obsessions {
+  font-style: italic;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
