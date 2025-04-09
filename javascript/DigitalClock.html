@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock</title>
+  <style>
+    .clock-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .clock-container.dark {
+      background-color: #111;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+
+    .clock-container.light {
+      background-color: #f0f0f0;
+      color: #333;
+      text-shadow: none;
+    }
+
+    .time {
+      font-size: 5rem;
+      margin: 1rem 0;
+    }
+
+    .date {
+      font-size: 1.2rem;
+    }
+
+    .greeting {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: transparent;
+      border: 2px solid currentColor;
+      color: inherit;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      z-index: 1000;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .toggle-btn:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="clock" class="clock-container">
+    <button class="toggle-btn" onclick="toggleTheme()">Switch Theme</button>
+    <div class="greeting" id="greeting">Good Day</div>
+    <div class="time" id="time">00:00:00</div>
+    <div class="date" id="date">Loading date...</div>
+  </div>
+
+  <script>
+    const clockContainer = document.getElementById('clock');
+    const greetingEl = document.getElementById('greeting');
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    let theme = '';
+
+    function getThemeByTime(hour) {
+      return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString();
+    }
+
+    function formatDate(date) {
+      return date.toLocaleDateString(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }
+
+    function getGreeting(hour) {
+      if (hour < 12) return 'Good Morning ☀️';
+      else if (hour < 18) return 'Good Afternoon 🌤️';
+      else return 'Good Evening 🌙';
+    }
+
+    function updateClock() {
+      const now = new Date();
+      timeEl.textContent = formatTime(now);
+      dateEl.textContent = formatDate(now);
+      greetingEl.textContent = getGreeting(now.getHours());
+    }
+
+    function toggleTheme() {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      clockContainer.classList.remove('dark', 'light');
+      clockContainer.classList.add(theme);
+      updateToggleButton();
+    }
+
+    function updateToggleButton() {
+      const btn = document.querySelector('.toggle-btn');
+      btn.textContent = `Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`;
+    }
+
+    function init() {
+      const hour = new Date().getHours();
+      theme = getThemeByTime(hour);
+      clockContainer.classList.add(theme);
+      updateToggleButton();
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    init();
+  </script>
+</body>
+</html>

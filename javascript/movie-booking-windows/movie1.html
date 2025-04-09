@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interstellar - Movie Booking</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    .seats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .seats button {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .seats button.selected {
+      background-color: #4caf50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>Movie ID: 1</h2>
+  <a href="index.html"><button>Home</button></a>
+
+  <div class="seats" id="seats"></div>
+
+  <button id="bookBtn" disabled>Book Now</button>
+
+  <script>
+    const seatContainer = document.getElementById('seats');
+    const bookBtn = document.getElementById('bookBtn');
+    const selectedSeats = new Set();
+
+    for (let i = 1; i <= 20; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.addEventListener('click', () => {
+        if (selectedSeats.has(i)) {
+          selectedSeats.delete(i);
+          btn.classList.remove('selected');
+        } else {
+          selectedSeats.add(i);
+          btn.classList.add('selected');
+        }
+        bookBtn.disabled = selectedSeats.size === 0;
+      });
+      seatContainer.appendChild(btn);
+    }
+
+    bookBtn.addEventListener('click', () => {
+      alert(`Booked seats: ${[...selectedSeats].join(', ')}`);
+      selectedSeats.clear();
+      document.querySelectorAll('.seats button').forEach(btn => btn.classList.remove('selected'));
+      bookBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>

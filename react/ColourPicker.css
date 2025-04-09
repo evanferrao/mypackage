@@ -1,0 +1,34 @@
+.picker-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .picker-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .picker-card h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .picker-card input[type="color"] {
+    border: none;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  
+  .hex-code {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  

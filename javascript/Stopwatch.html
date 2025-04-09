@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stopwatch</title>
+  <style>
+    .stopwatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      border: 2px solid #ccc;
+      border-radius: 16px;
+      max-width: 300px;
+      margin: 20px auto;
+      background-color: #fdfdfd;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .display {
+      font-size: 48px;
+      font-family: 'Courier New', monospace;
+      margin: 16px 0;
+      color: #2c3e50;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      padding: 10px 18px;
+      font-size: 15px;
+      border: none;
+      background-color: #27ae60;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #1e8449;
+    }
+
+    button:disabled {
+      background-color: #bdc3c7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <h2>Stopwatch</h2>
+    <div class="display" id="display">00:00:00</div>
+    <div class="controls">
+      <button id="startBtn">Start</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let seconds = 0;
+    let intervalId = null;
+
+    const display = document.getElementById('display');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function formatTime(secs) {
+      const hrs = Math.floor(secs / 3600);
+      const mins = Math.floor((secs % 3600) / 60);
+      const secsRemain = secs % 60;
+      return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secsRemain).padStart(2, '0')}`;
+    }
+
+    function updateDisplay() {
+      display.textContent = formatTime(seconds);
+    }
+
+    function startTimer() {
+      if (!intervalId) {
+        intervalId = setInterval(() => {
+          seconds++;
+          updateDisplay();
+        }, 1000);
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(intervalId);
+      intervalId = null;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      seconds = 0;
+      updateDisplay();
+    }
+
+    startBtn.addEventListener('click', startTimer);
+    stopBtn.addEventListener('click', stopTimer);
+    resetBtn.addEventListener('click', resetTimer);
+
+    updateDisplay();
+  </script>
+</body>
+</html>

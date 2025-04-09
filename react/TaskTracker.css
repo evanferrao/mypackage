@@ -1,0 +1,64 @@
+.task-tracker {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+  }
+  
+  .input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 8px;
+  }
+  
+  button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .counts {
+    margin-bottom: 10px;
+  }
+  
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+  }
+  
+  .task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2em;
+  }
+  
+  .task.completed span {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  input[type="checkbox"] {
+    width: 40px;
+    height: 30px;
+  }
+
+  
+  

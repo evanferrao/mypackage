@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+    }
+    button {
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="shop">
+    <h2>🛒 Shop</h2>
+    <a href="index.html"><button>Home</button></a>
+    <a href="cart.html"><button>View Cart</button></a>
+
+    <ul>
+      <li>
+        T-shirt - $20
+        <button onclick="alert('T-shirt added to cart')">Add</button>
+      </li>
+      <li>
+        Shoes - $50
+        <button onclick="alert('Shoes added to cart')">Add</button>
+      </li>
+      <li>
+        Cap - $15
+        <button onclick="alert('Cap added to cart')">Add</button>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

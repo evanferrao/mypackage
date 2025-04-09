@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Review</title>
+  <style>
+    .productReview {
+      max-width: 500px;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .image {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .reviewForm {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .reviewForm input,
+    .reviewForm textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .reviewForm button {
+      align-self: flex-start;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .reviewForm button:hover {
+      background-color: #0056b3;
+    }
+
+    .review {
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="productReview">
+    <h2 id="productName">Smartphone</h2>
+    <img id="productImage" src="https://via.placeholder.com/400x200" alt="Product" class="image" />
+    <p id="productDescription">A high-quality smartphone with all the latest features.</p>
+
+    <h3>Add a Review</h3>
+    <form id="reviewForm" class="reviewForm">
+      <input type="text" id="reviewerName" placeholder="Your name" required />
+      <textarea id="reviewComment" placeholder="Your review" required></textarea>
+      <input type="number" id="reviewRating" min="1" max="5" value="5" required />
+      <button type="submit">Submit Review</button>
+    </form>
+
+    <h3>Reviews</h3>
+    <div id="reviewsContainer">
+      <p>No reviews yet.</p>
+    </div>
+  </div>
+
+  <script>
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewsContainer = document.getElementById('reviewsContainer');
+    let reviews = [];
+
+    reviewForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('reviewerName').value.trim();
+      const comment = document.getElementById('reviewComment').value.trim();
+      const rating = parseInt(document.getElementById('reviewRating').value);
+
+      if (!name || !comment || rating < 1 || rating > 5) return;
+
+      reviews.push({ name, comment, rating });
+      renderReviews();
+      reviewForm.reset();
+      document.getElementById('reviewRating').value = 5;
+    });
+
+    function renderReviews() {
+      reviewsContainer.innerHTML = '';
+      if (reviews.length === 0) {
+        reviewsContainer.innerHTML = '<p>No reviews yet.</p>';
+        return;
+      }
+
+      reviews.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.innerHTML = `<h4>${r.name} - ⭐ ${r.rating}/5</h4><p>${r.comment}</p>`;
+        reviewsContainer.appendChild(div);
+      });
+    }
+  </script>
+
+</body>
+</html>

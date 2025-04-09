@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MegaCounter (Vanilla JS)</title>
+  <style>
+    body {
+      background: #eef2f7;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      background: #f7f9fc;
+      text-align: center;
+    }
+    .time-display {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      font-family: 'Courier New', monospace;
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    input {
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      font-size: 16px;
+      width: 150px;
+      text-align: center;
+    }
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #mode-btn {
+      background: #0984e3;
+      color: white;
+      margin-top: 12px;
+    }
+    ul {
+      text-align: left;
+      margin-top: 20px;
+      padding-left: 0;
+      list-style-position: inside;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>MegaCounter</h2>
+    <div class="time-display" id="display">00:00:00.000</div>
+
+    <input type="text" id="inputTime" placeholder="hh:mm:ss" value="00:00:10" style="display:none" />
+
+    <div class="button-row">
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+      <button id="reset">Reset</button>
+      <button id="lap" style="display:none">Lap</button>
+    </div>
+
+    <button id="mode-btn">Switch to Countdown Timer</button>
+
+    <div id="laps"></div>
+  </div>
+
+  <script>
+    let isStopwatch = true;
+    let isRunning = false;
+    let time = 0;
+    let laps = [];
+    let interval;
+
+    const display = document.getElementById('display');
+    const inputTime = document.getElementById('inputTime');
+    const lapBtn = document.getElementById('lap');
+    const lapsDiv = document.getElementById('laps');
+    const modeBtn = document.getElementById('mode-btn');
+
+    function formatTime(ms) {
+      const milliseconds = ms % 1000;
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+    }
+
+    function parseInputTime(str) {
+      const [h, m, s] = str.split(':').map(Number);
+      return ((h * 3600 + m * 60 + s) * 1000);
+    }
+
+    function updateDisplay() {
+      display.textContent = formatTime(time);
+    }
+
+    function tick() {
+      if (isStopwatch) {
+        time += 10;
+      } else {
+        time = time > 0 ? time - 10 : 0;
+        if (time === 0) {
+          stopTimer();
+          alert("Countdown finished!");
+        }
+      }
+      updateDisplay();
+    }
+
+    function startTimer() {
+      if (!isRunning) {
+        if (!isStopwatch && time === 0) {
+          time = parseInputTime(inputTime.value);
+        }
+        interval = setInterval(tick, 10);
+        isRunning = true;
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(interval);
+      isRunning = false;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      time = isStopwatch ? 0 : parseInputTime(inputTime.value);
+      laps = [];
+      updateDisplay();
+      renderLaps();
+    }
+
+    function addLap() {
+      if (isStopwatch && isRunning) {
+        laps.push(time);
+        renderLaps();
+      }
+    }
+
+    function renderLaps() {
+      if (laps.length === 0) {
+        lapsDiv.innerHTML = '';
+        return;
+      }
+      let html = "<h3>Laps</h3><ul>";
+      laps.forEach((lap, i) => {
+        html += `<li>Lap ${i + 1}: ${formatTime(lap)}</li>`;
+      });
+      html += "</ul>";
+      lapsDiv.innerHTML = html;
+    }
+
+    function toggleMode() {
+      isStopwatch = !isStopwatch;
+      stopTimer();
+      time = isStopwatch ? 0 : parseInputTime(inputTime.value);
+      laps = [];
+      updateDisplay();
+      renderLaps();
+
+      inputTime.style.display = isStopwatch ? 'none' : 'inline-block';
+      lapBtn.style.display = isStopwatch ? 'inline-block' : 'none';
+      modeBtn.textContent = `Switch to ${isStopwatch ? 'Countdown Timer' : 'Stopwatch'}`;
+    }
+
+    document.getElementById('start').onclick = startTimer;
+    document.getElementById('stop').onclick = stopTimer;
+    document.getElementById('reset').onclick = resetTimer;
+    document.getElementById('lap').onclick = addLap;
+    document.getElementById('mode-btn').onclick = toggleMode;
+
+    updateDisplay();
+  </script>
+</body>
+</html>

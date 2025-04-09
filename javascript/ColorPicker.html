@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colour Picker</title>
+  <style>
+    .picker-container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .picker-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .picker-card h2 {
+      margin-bottom: 1rem;
+    }
+
+    .picker-card input[type="color"] {
+      border: none;
+      width: 100px;
+      height: 50px;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+
+    .hex-code {
+      font-size: 1.1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="picker-container" id="pickerContainer">
+    <div class="picker-card">
+      <h2>Pick a Colour</h2>
+      <input type="color" id="colorInput" value="#3498db" />
+      <p class="hex-code">Hex Code: <strong id="hexCode">#3498db</strong></p>
+    </div>
+  </div>
+
+  <script>
+    const colorInput = document.getElementById('colorInput');
+    const hexCode = document.getElementById('hexCode');
+    const pickerContainer = document.getElementById('pickerContainer');
+
+    colorInput.addEventListener('input', () => {
+      const newColor = colorInput.value;
+      pickerContainer.style.backgroundColor = newColor;
+      hexCode.textContent = newColor;
+    });
+  </script>
+</body>
+</html>

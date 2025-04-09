@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Counter</title>
+  <style>
+    .counter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      border: 2px solid #ccc;
+      border-radius: 16px;
+      max-width: 250px;
+      margin: 40px auto;
+      background-color: #fafafa;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      font-family: Arial, sans-serif;
+    }
+
+    .count-display {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 16px 0;
+      color: #34495e;
+    }
+
+    .counter-controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      background-color: #2980b9;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #1c5980;
+    }
+
+    button:disabled {
+      background-color: #bdc3c7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter">
+    <h2>Counter</h2>
+    <div class="count-display" id="countDisplay">0</div>
+    <div class="counter-controls">
+      <button id="incrementBtn">+</button>
+      <button id="decrementBtn" disabled>-</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let count = 0;
+    const countDisplay = document.getElementById('countDisplay');
+    const incrementBtn = document.getElementById('incrementBtn');
+    const decrementBtn = document.getElementById('decrementBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const updateDisplay = () => {
+      countDisplay.textContent = count;
+      decrementBtn.disabled = count <= 0;
+    };
+
+    incrementBtn.addEventListener('click', () => {
+      count++;
+      updateDisplay();
+    });
+
+    decrementBtn.addEventListener('click', () => {
+      if (count > 0) count--;
+      updateDisplay();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      count = 0;
+      updateDisplay();
+    });
+  </script>
+</body>
+</html>

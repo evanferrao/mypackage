@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Theme Switcher</title>
+  <style>
+    .container {
+      text-align: center;
+      padding: 40px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .light {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .dark {
+      background-color: #222;
+      color: #f9f9f9;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="container">
+    <h1>🌓 Theme Switcher</h1>
+    <p>The current theme is <strong id="themeLabel">Light</strong>.</p>
+    <button id="toggleBtn">Toggle Theme</button>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const themeLabel = document.getElementById('themeLabel');
+    const body = document.body;
+
+    toggleBtn.addEventListener('click', () => {
+      const darkMode = body.classList.contains('dark');
+      body.className = darkMode ? 'light' : 'dark';
+      themeLabel.textContent = darkMode ? 'Light' : 'Dark';
+    });
+  </script>
+</body>
+</html>

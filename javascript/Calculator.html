@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculator</title>
+  <style>
+    .calculator {
+      width: 450px;
+      margin: 100px auto;
+      padding: 20px;
+      background-color: #000000;
+      border: none;
+    }
+
+    .screen input {
+      width: 430px;
+      height: 50px;
+      background-color: #b4b4b4;
+      text-align: right;
+      font-size: 2rem;
+      border: none;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    .upper, .upper2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .lower {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 10px;
+    }
+
+    .upper button {
+      background-color: rgb(170, 125, 170);
+    }
+
+    .upper2 button {
+      background-color: rgb(118, 173, 135);
+    }
+
+    .lower button {
+      background-color: rgb(110, 162, 230);
+    }
+
+    button {
+      color: white;
+      font-weight: bold;
+      padding: 20px;
+      font-size: 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+      border: none;
+    }
+
+    #equals {
+      background-color: red;
+    }
+
+    button:hover {
+      background-color: #ac9999;
+    }
+
+    button:active {
+      background-color: #000000;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="screen">
+      <input type="text" id="display" readonly />
+    </div>
+    <div class="buttons">
+      <div class="upper" id="r1">
+        <button data-action="ac">↻</button>
+        <button data-action="back">←</button>
+        <button data-action="back">C</button>
+        <button data-action="ac">AC</button>
+      </div>
+
+      <div class="upper2">
+        <button data-value="7">mc</button>
+        <button data-value="8">m+</button>
+        <button data-value="9">m-</button>
+        <button data-value="/">mr</button>
+      </div>
+
+      <div class="lower">
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+        <button data-value="/">/</button>
+        <button data-value="✓">✓</button>
+
+        <button data-value="4">4</button>
+        <button data-value="5">5</button>
+        <button data-value="6">6</button>
+        <button data-value="*">X</button>
+        <button data-action="square">x^2</button>
+
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="3">3</button>
+        <button data-value="-">-</button>
+        <button data-action="inverse">1/x</button>
+
+        <button data-value="0">0</button>
+        <button data-value=".">.</button>
+        <button data-value="+-">+-</button>
+        <button data-value="+">+</button>
+        <button id="equals">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let input = '';
+
+    function updateDisplay() {
+      display.value = input;
+    }
+
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        const value = button.dataset.value;
+        const action = button.dataset.action;
+
+        if (action === 'ac') {
+          input = '';
+        } else if (action === 'back') {
+          input = input.slice(0, -1);
+        } else if (action === 'square') {
+          try {
+            input = Math.pow(eval(input), 2).toString();
+          } catch {
+            input = 'Error';
+          }
+        } else if (action === 'inverse') {
+          try {
+            input = (1 / eval(input)).toString();
+          } catch {
+            input = 'Error';
+          }
+        } else if (button.id === 'equals') {
+          try {
+            input = eval(input).toString();
+          } catch {
+            input = 'Error';
+          }
+        } else if (value) {
+          input += value;
+        }
+
+        updateDisplay();
+      });
+    });
+  </script>
+</body>
+</html>
