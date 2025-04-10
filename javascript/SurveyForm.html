@@ -1,300 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Survey Form</title>
-  <style>
-    body {
-      background-color: #0616a4;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #0616a4;
+        }
+
+        #survey-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="radio"],
+        input[type="checkbox"],
+        select, textarea {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #001993; 
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0057b8;
+        }
+
+        .highlight {
+            border: 2px solid red;
+        }
+
+
+        #question-progress {
+            text-align: right;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #032B44; 
+        }
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    #thank-you-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000; 
+        display: none;
+        text-align: center;
     }
 
-    .progress {
-      text-align: right;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #032B44;
-    }
 
-    .thankYou {
-      background: white;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-
-    fieldset {
-      border: none;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-
-    input, select, textarea, button {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-top: 15px;
-      background-color: #0616a4;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #032B44;
-    }
-  </style>
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Online Survey</h1>
-    <form id="surveyForm">
-      <fieldset>
-        <legend>Personal Info</legend>
-        <label>Name:
-          <input type="text" name="name" required>
-        </label>
-        <label>Phone Number:
-          <input type="tel" name="phone" required>
-        </label>
-        <label>Age:
-          <input type="number" name="age" min="18" max="120" required>
-        </label>
-        <label>User Type:
-          <select name="userType" required>
-            <option value="">Select User Type</option>
-            <option value="student">Student</option>
-            <option value="professional">Professional</option>
-            <option value="retired">Retired</option>
-          </select>
-        </label>
-        <label>Preferred Survey Category:
-          <select name="surveyCategory" required>
-            <option value="technology">Technology</option>
-            <option value="health">Health</option>
-            <option value="education">Education</option>
-          </select>
-        </label>
-      </fieldset>
+    <div id="survey-container">
+        <h1>Online Survey</h1>
+        <form id="survey-form">
+            <fieldset>
+                <legend>Personal Info</legend>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
 
-      <div id="surveyContent"></div>
-    </form>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
 
-    <div id="thankYouMessage" class="thankYou" style="display:none">
-      <h2>Thank you for completing the survey!</h2>
-      <p>Your responses have been recorded.</p>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="18" max="120" required>
+
+                <label for="user-type">User Type:</label>
+                <select id="user-type" name="user-type" required>
+                    <option value="">Select User Type</option>
+                    <option value="student">Student</option>
+                    <option value="professional">Professional</option>
+                    <option value="retired">Retired</option>
+                </select>
+
+                <label for="survey-category">Preferred Survey Category:</label>
+                <select id="survey-category" name="survey-category" required>
+                    <option value="technology">Technology</option>
+                    <option value="health">Health</option>
+                    <option value="education">Education</option>
+                </select>
+            </fieldset>
+
+            <fieldset id="survey-fieldset">
+                <legend>Survey</legend>
+                <div id="question-progress"></div>
+                <div id="survey-questions"></div>
+                <button type="button" id="next-button">Next</button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Feedback</legend>
+                <label for="additional-feedback">Please provide any additional thoughts:</label>
+                <textarea id="additional-feedback" name="additional-feedback" rows="4"></textarea>
+            </fieldset>
+
+            <button type="submit">Submit Survey</button>
+        </form>
     </div>
-  </div>
 
-  <script>
-    const topicQuestions = {
-      technology: [
-        {
-          type: 'radio',
-          question: 'How often do you upgrade your smartphone?',
-          options: ['Every year', 'Every 2-3 years', 'Every 4-5 years', 'Rarely or never']
-        },
-        {
-          type: 'checkbox',
-          question: 'Which of the following technologies do you use regularly?',
-          options: ['Artificial Intelligence', 'Virtual Reality', 'Cloud Computing', 'Internet of Things', 'Blockchain']
-        }
-      ],
-      health: [
-        {
-          type: 'radio',
-          question: 'How often do you exercise?',
-          options: ['Daily', '3-4 times a week', '1-2 times a week', 'Rarely or never']
-        },
-        {
-          type: 'checkbox',
-          question: 'Which of the following health practices do you follow?',
-          options: ['Regular check-ups', 'Balanced diet', 'Meditation', 'Yoga', 'Tracking sleep patterns']
-        }
-      ],
-      education: [
-        {
-          type: 'radio',
-          question: 'How do you prefer to learn new skills?',
-          options: ['Online courses', 'In-person classes', 'Self-study with books', 'Hands-on experience']
-        },
-        {
-          type: 'checkbox',
-          question: 'Which of the following educational resources do you use?',
-          options: ['MOOCs', 'Educational apps', 'Textbooks', 'Video tutorials', 'Study groups']
-        }
-      ]
-    };
+    <div id="overlay"></div>
+<div id="thank-you-message">
+    <h2>Thank you for completing the Technology survey!</h2>
+    <p>Your responses have been recorded.</p>
+</div>
 
-    const baseQuestions = [
-      {
+    
+    <script>
+    
+
+const topicQuestions = {
+    technology: [
+        {
+            type: 'radio',
+            question: 'How often do you upgrade your smartphone?',
+            options: ['Every year', 'Every 2-3 years', 'Every 4-5 years', 'Rarely or never']
+        },
+        {
+            type: 'checkbox',
+            question: 'Which of the following technologies do you use regularly?',
+            options: ['Artificial Intelligence', 'Virtual Reality', 'Cloud Computing', 'Internet of Things', 'Blockchain']
+        }
+    ],
+    health: [
+        {
+            type: 'radio',
+            question: 'How often do you exercise?',
+            options: ['Daily', '3-4 times a week', '1-2 times a week', 'Rarely or never']
+        },
+        {
+            type: 'checkbox',
+            question: 'Which of the following health practices do you follow?',
+            options: ['Regular check-ups', 'Balanced diet', 'Meditation', 'Yoga', 'Tracking sleep patterns']
+        }
+    ],
+    education: [
+        {
+            type: 'radio',
+            question: 'How do you prefer to learn new skills?',
+            options: ['Online courses', 'In-person classes', 'Self-study with books', 'Hands-on experience']
+        },
+        {
+            type: 'checkbox',
+            question: 'Which of the following educational resources do you use?',
+            options: ['MOOCs', 'Educational apps', 'Textbooks', 'Video tutorials', 'Study groups']
+        }
+    ]
+};
+
+const baseQuestions = [
+    {
         type: 'radio',
         question: 'Do you agree with the statement above?',
         options: ['Yes', 'No', 'Unsure']
-      },
-      {
+    },
+    {
         type: 'checkbox',
         question: 'Select the options that apply to you:',
         options: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5']
-      },
-      {
+    },
+    {
         type: 'radio',
         question: 'How likely are you to recommend this survey to others?',
         options: ['Very likely', 'Somewhat likely', 'Neutral', 'Somewhat unlikely', 'Very unlikely']
-      }
-    ];
-
-    const surveyForm = document.getElementById('surveyForm');
-    const surveyContent = document.getElementById('surveyContent');
-    const thankYouMessage = document.getElementById('thankYouMessage');
-
-    let questions = [];
-    let currentQuestion = 0;
-    const answers = {};
-
-    function buildSurvey(category) {
-      questions = [...(topicQuestions[category] || []), ...baseQuestions];
-      currentQuestion = 0;
-      surveyContent.innerHTML = '';
-      renderQuestion();
     }
+];
 
-    function renderQuestion() {
-      surveyContent.innerHTML = '';
+let currentQuestion = 0;
+let questions = [];
 
-      if (currentQuestion < questions.length) {
-        const q = questions[currentQuestion];
-        const fieldset = document.createElement('fieldset');
-        const legend = document.createElement('legend');
-        legend.textContent = `Question ${currentQuestion + 1}`;
-        fieldset.appendChild(legend);
+function updateQuestions() {
+    const category = document.getElementById('survey-category').value;
+    questions = category ? [...topicQuestions[category], ...baseQuestions] : [...topicQuestions['technology'], ...baseQuestions];
+}
 
-        const p = document.createElement('p');
-        p.textContent = q.question;
-        fieldset.appendChild(p);
+function displayQuestion() {
+    const questionContainer = document.getElementById('survey-questions');
+    questionContainer.innerHTML = '';
 
-        q.options.forEach(opt => {
-          const label = document.createElement('label');
-          const input = document.createElement('input');
-          input.type = q.type;
-          input.name = `q${currentQuestion}`;
-          input.value = opt;
-          input.checked = answers[currentQuestion]?.includes(opt) || false;
+    const question = questions[currentQuestion];
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    legend.textContent = `Question ${currentQuestion + 1}`;
+    fieldset.appendChild(legend);
 
-          input.addEventListener('change', () => handleAnswer(currentQuestion, opt, q.type === 'checkbox'));
-          label.appendChild(input);
-          label.append(` ${opt}`);
-          fieldset.appendChild(label);
+    const questionText = document.createElement('p');
+    questionText.textContent = question.question;
+    fieldset.appendChild(questionText);
+
+    if (question.type === 'radio') {
+        question.options.forEach((option) => {
+            const label = document.createElement('label');
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = `question${currentQuestion}`;
+            radio.value = option;
+            radio.required = true;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(option));
+            fieldset.appendChild(label);
         });
-
-        const progress = document.createElement('div');
-        progress.className = 'progress';
-        progress.textContent = `${currentQuestion + 1}/${questions.length}`;
-        surveyContent.appendChild(progress);
-
-        surveyContent.appendChild(fieldset);
-
-        const nextBtn = document.createElement('button');
-        nextBtn.type = 'button';
-        nextBtn.textContent = 'Next';
-        nextBtn.addEventListener('click', handleNext);
-        surveyContent.appendChild(nextBtn);
-      } else {
-        const feedbackFieldset = document.createElement('fieldset');
-        const legend = document.createElement('legend');
-        legend.textContent = 'Feedback';
-        feedbackFieldset.appendChild(legend);
-
-        const label = document.createElement('label');
-        label.textContent = 'Please provide any additional thoughts:';
-
-        const textarea = document.createElement('textarea');
-        textarea.name = 'feedback';
-        textarea.rows = 4;
-        label.appendChild(textarea);
-
-        feedbackFieldset.appendChild(label);
-
-        const submitBtn = document.createElement('button');
-        submitBtn.type = 'submit';
-        submitBtn.textContent = 'Submit Survey';
-
-        feedbackFieldset.appendChild(submitBtn);
-        surveyContent.appendChild(feedbackFieldset);
-      }
+    } else if (question.type === 'checkbox') {
+        question.options.forEach((option) => {
+            const label = document.createElement('label');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = `question${currentQuestion}`;
+            checkbox.value = option;
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(option));
+            fieldset.appendChild(label);
+        });
     }
 
-    function handleAnswer(index, option, isCheckbox) {
-      if (!answers[index]) answers[index] = [];
+    questionContainer.appendChild(fieldset);
+    updateQuestionProgress();
+}
 
-      if (isCheckbox) {
-        const i = answers[index].indexOf(option);
-        if (i > -1) {
-          answers[index].splice(i, 1);
-        } else {
-          answers[index].push(option);
-        }
-      } else {
-        answers[index] = [option];
-      }
+function updateQuestionProgress() {
+    const progressElement = document.getElementById('question-progress');
+    progressElement.textContent = `${currentQuestion + 1}/${questions.length}`;
+}
+
+function validateCurrentQuestion() {
+    const currentFieldset = document.querySelector('#survey-questions fieldset');
+    const inputs = currentFieldset.querySelectorAll('input');
+    let isValid = false;
+
+    if (questions[currentQuestion].type === 'radio') {
+        isValid = Array.from(inputs).some(input => input.checked);
+    } else if (questions[currentQuestion].type === 'checkbox') {
+        isValid = Array.from(inputs).some(input => input.checked);
     }
 
-    function handleNext() {
-      const ans = answers[currentQuestion];
-      if (ans && ans.length > 0) {
+    if (!isValid) {
+        currentFieldset.classList.add('highlight');
+    } else {
+        currentFieldset.classList.remove('highlight');
+    }
+
+    return isValid;
+}
+
+function nextQuestion() {
+    if (validateCurrentQuestion()) {
         currentQuestion++;
-        renderQuestion();
-      } else {
-        alert('Please select at least one option.');
-      }
+        if (currentQuestion < questions.length) {
+            displayQuestion();
+        } else {
+            document.getElementById('survey-questions').style.display = 'none';
+            document.getElementById('next-button').style.display = 'none';
+        }
     }
+}
 
-    surveyForm.addEventListener('change', (e) => {
-      if (e.target.name === 'surveyCategory') {
-        buildSurvey(e.target.value);
-      }
+document.getElementById('next-button').addEventListener('click', nextQuestion);
+
+document.getElementById('survey-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (validateForm()) {
+        showThankYouMessage();
+    }
+});
+
+function validateForm() {
+    const requiredFields = document.querySelectorAll('input[required], select[required]');
+    let isValid = true;
+
+    requiredFields.forEach(field => {
+        if (!field.value) {
+            field.classList.add('highlight');
+            isValid = false;
+        } else {
+            field.classList.remove('highlight');
+        }
     });
 
-    surveyForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    return isValid && validateCurrentQuestion();
+}
 
-      const formData = new FormData(surveyForm);
-      const allValid = ['name', 'phone', 'age', 'userType', 'surveyCategory'].every(key => formData.get(key));
-      if (!allValid || !answers[currentQuestion] || answers[currentQuestion].length === 0) {
-        alert('Please complete all required fields and the final question.');
-        return;
-      }
+function showThankYouMessage() {
+    document.getElementById('thank-you-message').style.display = 'block';
+    document.getElementById('survey-form').style.display = 'none';
+}
 
-      surveyForm.style.display = 'none';
-      thankYouMessage.style.display = 'block';
-      thankYouMessage.querySelector('h2').textContent = `Thank you for completing the ${formData.get('surveyCategory')} survey!`;
-    });
+document.getElementById('survey-category').addEventListener('change', function() {
+    updateQuestions();
+    currentQuestion = 0;
+    displayQuestion();
+});
 
-    // Initialize with default category
-    buildSurvey('technology');
-  </script>
+
+updateQuestions();
+displayQuestion();
+
+function countResponses() {
+    for (let i = 0; i < questions.length; i++) {
+        const responses = document.querySelectorAll(`input[name="question${i}"]:checked`);
+        console.log(`Question ${i + 1} has ${responses.length} response(s)`);
+    }
+}
+
+document.getElementById('survey-form').addEventListener('submit', function (e) {
+    e.preventDefault(); 
+
+    if (validateForm()) { 
+        showThankYouMessage();
+    }
+});
+
+function showThankYouMessage() {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('thank-you-message').style.display = 'block';
+    document.getElementById('survey-form').style.display = 'none'; // Hide form
+}
+
+
+    </script>
+
 </body>
 </html>

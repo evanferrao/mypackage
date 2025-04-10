@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            text-align: center;
+        }
+        .container {
+            background: white;
+            color: black;
+            width: 70%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .outerdiv, .outerdiv2 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .outerdiv > div, .outerdiv2 > div {
+            width: 48%;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #ff416c;
+        }
+        button {
+            background-color: #ff416c;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff2a5b;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -8px;
+            display: block;
+        }
+        .valid {
+            border-color: green;
+        }
+        .invalid {
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Details Form</h2>
+    <form id="studentForm" onsubmit="return validateForm()">
+        <div class="outerdiv">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                <span class="error" id="nameError"></span>
+
+                <label for="school">School</label>
+                <input type="text" id="school" name="school" required>
+                <span class="error" id="schoolError"></span>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <span class="error" id="emailError"></span>
+
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" required>
+                <span class="error" id="phoneError"></span>
+            </div>
+        </div>
+
+        <div class="outerdiv2">
+            <div>
+                <label>Gender</label>
+                <div style="display: flex; flex-direction: row; gap: 5px;">
+                    <input type="radio" name="gender" value="Male" required> Male
+                    <input type="radio" name="gender" value="Female" required> Female
+                </div>
+                <span class="error" id="genderError"></span>
+            </div>
+            <div>
+                <label>Course</label>
+                <div style="display: flex; flex-direction: row; gap: 2px">
+                    <input type="checkbox" name="course" value="IT"> IT
+                    <input type="checkbox" name="course" value="HRM"> HRM
+                    <input type="checkbox" name="course" value="English"> English
+                    <input type="checkbox" name="course" value="Graphic Design"> Graphic Design
+                    <input type="checkbox" id="checkAll" onclick="chooseAll(this)"> Select All
+                </div>
+                <span class="error" id="courseError"></span>
+            </div>
+            <div>
+                <label for="category">Category</label>
+                <select name="category">
+                    <option selected="selected">Mars</option>
+                    <option>Earth</option>
+                    <option>Venus</option>
+                    <option>Jupiter</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="biography">Biography</label>
+        <textarea id="biography" name="biography" rows="4" cols="50" oninput="autoResize(this)"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    // Name Validation
+    document.getElementById('name').addEventListener('input', function () {
+        let name = this.value;
+        if (name.length >= 3 && name.length <= 15) {
+            this.classList.add('valid');
+            this.classList.remove('invalid');
+            document.getElementById('nameError').innerText = '';
+        } else {
+            this.classList.add('invalid');
+            this.classList.remove('valid');
+            document.getElementById('nameError').innerText = 'Name must be between 3 and 15 characters';
+        }
+    });
+
+    // Email Validation
+    document.getElementById('email').addEventListener('input', function () {
+        let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (emailPattern.test(this.value)) {
+            this.classList.add('valid');
+            this.classList.remove('invalid');
+            document.getElementById('emailError').innerText = '';
+        } else {
+            this.classList.add('invalid');
+            this.classList.remove('valid');
+            document.getElementById('emailError').innerText = 'Invalid email format';
+        }
+    });
+
+    // school validation 
+    document.getElementById('school').addEventListener('input', function(){
+        let school = this.value;
+        if (school.length >= 3 && school.length <=20){
+            this.classList.add('valid');
+            this.classList.remove('invalid');
+            document.getElementById('schoolError').innerText = '';
+        } else {
+            this.classList.add('invalid');
+            this.classList.remove('valid');
+            document.getElementById('schoolError').innerText = 'School must be between 3 and 20 characters';
+        }
+    })
+
+    // Phone Validation
+    document.getElementById('phone').addEventListener('input', function () {
+        if (this.value.length === 10 && !isNaN(this.value)) {
+            this.classList.add('valid');
+            this.classList.remove('invalid');
+            document.getElementById('phoneError').innerText = '';
+        } else {
+            this.classList.add('invalid');
+            this.classList.remove('valid');
+            document.getElementById('phoneError').innerText = 'Phone number must be exactly 10 digits';
+        }
+    });
+
+    // Select All for Courses
+    function chooseAll(source) {
+        let checkboxes = document.getElementsByName("course");
+        for (let checkbox of checkboxes) {
+            checkbox.checked = source.checked;
+        }
+    }
+
+    // Auto-resize for Biography
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+
+    // Final Form Validation
+    function validateForm() {
+    let isValid = true;
+
+    // Name Validation
+    let name = document.getElementById('name').value;
+    if (name.length < 3 || name.length > 15) {
+        document.getElementById('nameError').innerText = 'Name must be between 3 and 15 characters';
+        document.getElementById('name').style.border = '1px solid red';
+        isValid = false;
+    } else {
+        document.getElementById('nameError').innerText = '';
+        document.getElementById('name').style.border = '1px solid green';
+    }
+
+    // Email Validation
+    let email = document.getElementById('email').value;
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(email)) {
+        document.getElementById('emailError').innerText = 'Invalid email format';
+        document.getElementById('email').style.border = '1px solid red';
+        isValid = false;
+    } else {
+        document.getElementById('emailError').innerText = '';
+        document.getElementById('email').style.border = '1px solid green';
+    }
+
+    // Phone Validation
+    let phone = document.getElementById('phone').value;
+    if (phone.length !== 10 || isNaN(phone)) {
+        document.getElementById('phoneError').innerText = 'Phone number must be exactly 10 digits';
+        document.getElementById('phone').style.border = '1px solid red';
+        isValid = false;
+    } else {
+        document.getElementById('phoneError').innerText = '';
+        document.getElementById('phone').style.border = '1px solid green';
+    }
+
+    let gender = document.querySelector('input[name="gender"]:checked');
+    let genderContainer = document.getElementsByName("gender")[0].parentElement;
+    if (!gender) {
+        document.getElementById('genderError').innerText = 'Please select a gender';
+        genderContainer.style.border = '1px solid red';
+        isValid = false;
+    } else {
+        document.getElementById('genderError').innerText = '';
+        genderContainer.style.border = '1px solid green';
+    }
+
+    // Confirm Values on Success
+    if (isValid) {
+        let school = document.getElementById('school').value;
+        let biography = document.getElementById('biography').value;
+        let selectedCourses = [...document.querySelectorAll('input[name="course"]:checked')].map(c => c.value);
+        let category = document.querySelector('select[name="category"]').value;
+
+        alert(`Confirm Details:\n\nName: ${name}\nSchool: ${school}\nEmail: ${email}\nPhone: ${phone}\nGender: ${gender.value}\nCourses: ${selectedCourses.join(', ')}\nCategory: ${category}\nBiography: ${biography}`);
+    }
+
+    return isValid;
+}
+
+</script>
+
+</body>
+</html>
